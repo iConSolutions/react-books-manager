@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 65px;
   border-bottom: 1px solid #eee;
-  background-color: #fafafa;
+  background-color: #fff;
   padding: 15px; 
   
   & button {

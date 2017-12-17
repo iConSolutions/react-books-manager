@@ -5,6 +5,7 @@ import { Switch, Route } from 'react-router-dom';
 
 /* Import Containers */
 import BooksPage from '../BooksPage/Loadable';
+import BookFormPage from '../BookFormPage/Loadable';
 
 /* Import Components */
 import TopBar from '../../components/TopBar';
@@ -23,7 +24,8 @@ export default class MainLayout extends React.PureComponent { // eslint-disable-
         {/* [all MainLayout's nested routes goes here] */}
         <ContentWrapper>
           <Switch>
-            <Route path="/books" component={BooksPage} />
+            <Route exact path={'/books'} component={BooksPage} />
+            <Route exact path="/books/add" component={BookFormPage} />
           </Switch>
         </ContentWrapper>
       </Wrapper>

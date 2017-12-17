@@ -8,56 +8,56 @@ const TEXT_DOM_ELEMENT = {
   H1: {
     dom: 'h1',
     default: {
-    }
+    },
   },
   H2: {
     dom: 'h2',
     default: {
-    }
+    },
   },
   H3: {
     dom: 'h3',
     default: {
-    }
+    },
   },
   H4: {
     dom: 'h4',
     default: {
-    }
+    },
   },
   H5: {
     dom: 'h5',
     default: {
-    }
+    },
   },
   H6: {
     dom: 'h6',
     default: {
-    }
+    },
   },
-  P : {
+  P: {
     dom: 'p',
     default: {
-    }
+    },
   },
   SPAN: {
     dom: 'span',
     default: {
-    }
-  }
+    },
+  },
 };
 
 const Text = (props) => {
   /* Prepare styles to be passed */
-  let style = Object.assign({},{
+  const style = Object.assign({}, {
     fontSize: props.fontSize ? props.fontSize.toString() + 'px' : '12px',
     fontWeight: props.fontWeight ? props.fontWeight : '400',
     color: props.color ? props.color : '#111',
-    textAlign: props.align ? props.align : 'left'
+    textAlign: props.align ? props.align : 'left',
   }, props.style);
 
   /* Create the appropriate element to be rendered */
-  let Element = React.createElement(props.element !== undefined ? props.element.dom : 'p', {style}, props.children);
+  const Element = React.createElement(props.element !== undefined ? props.element.dom : 'p', { style }, props.children);
 
   /* Render the created element */
   return (Element);
@@ -68,11 +68,11 @@ Text.propTypes = {
   fontWeight: PropTypes.number,
   color: PropTypes.string,
   element: PropTypes.object,
-  align: PropTypes.string
+  align: PropTypes.string,
 };
 
 
 export {
   Text,
-  TEXT_DOM_ELEMENT
+  TEXT_DOM_ELEMENT,
 };
