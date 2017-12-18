@@ -2,10 +2,12 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const logger = require('./logger');
 
 const api = require('./api');
 const config = require('./api/config');
+const ErrorHandler = require('./api/middlewares/error-handler');
 
 const argv = require('./argv');
 const port = require('./port');
@@ -18,8 +20,15 @@ const app = express();
 /* Connect to mongodb instance */
 mongoose.connect(config.mongodb.url(), { useMongoClient: true });
 
+/* Configure default middleware */
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 /* Mount the api */
 app.use('/api', api);
+
+/* Custom Error Handler */
+app.use(ErrorHandler);
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
