@@ -18,7 +18,7 @@ const get = (req, res, next) => {
     page: filters.page || 1,
   }, (err, result) => {
     if (err) {
-      return next(Error.InternalServerError());
+      return next(new Error.InternalServerError(err.toString()));
     }
     return res.json(result);
   });
@@ -46,7 +46,7 @@ const insert = (req, res, next) => {
   // save the book
   book.save((err) => {
     if (err) {
-      return next(Error.InternalServerError(err.toString()));
+      return next(new Error.InternalServerError(err.toString()));
     }
     return res.json({
       created: true,
@@ -66,9 +66,9 @@ const remove = (req, res, next) => {
   // remove the selected book
   Book.findByIdAndRemove(req.params.id, (err, book) => {
     if (err) {
-      return next(Error.InternalServerError(err.toString()));
+      return next(new Error.InternalServerError(err.toString()));
     } else if (book === null) {
-      return next(Error.ResourceNotFound(`Resource with id (${req.params.id}) not found`));
+      return next(new Error.ResourceNotFound(`Resource with id (${req.params.id}) not found`));
     }
     return res.json({
       deleted: true,
