@@ -12,18 +12,19 @@ import makeSelectBooksList from './selectors';
 import reducer from './reducer';
 
 /* Import Components */
-import EmptyList from '../../components/EmptyList';
+// import EmptyList from '../../components/EmptyList';
+import BooksList from '../../components/BooksList';
 
 
-export class BooksList extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class BooksPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <EmptyList />
+      <BooksList />
     );
   }
 }
 
-BooksList.propTypes = {
+BooksPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
@@ -44,4 +45,4 @@ const withReducer = injectReducer({ key: 'booksList', reducer });
 export default compose(
   withReducer,
   withConnect,
-)(BooksList);
+)(BooksPage);
