@@ -2,6 +2,7 @@
 /* Import Third Party Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 /* Import antd Components */
 import { Checkbox, Button, Icon } from 'antd';
@@ -18,7 +19,7 @@ import { Text, TEXT_DOM_ELEMENT } from '../../elements/Heading';
 import Book from '../Book/Loadable';
 
 
-function BooksList() {
+function BooksList({ books, selectAllBooks, selectBook, selectedBooksIds }) {
   return (
     <Wrapper>
       <Text element={TEXT_DOM_ELEMENT.H4} fontSize={24} color="#555" fontWeight={700}>
@@ -26,9 +27,11 @@ function BooksList() {
       </Text>
       <HeaderWrapper>
         <LeftPart>
-          <Checkbox onChange={() => {}}>Select all</Checkbox>
+          <Checkbox checked={books.length === selectedBooksIds.length} onChange={selectAllBooks}>Select all</Checkbox>
         </LeftPart>
         <RightPart>
+          { selectedBooksIds.length === 1 ? (<Link to={`/books/${selectedBooksIds[0]}`}><Button style={{ marginRight: '5px' }}>update</Button></Link>) : null }
+          { selectedBooksIds.length > 0 ? (<Button type="danger" style={{ marginRight: '5px' }}>delete</Button>) : null }
           <Button.Group>
             <Button>
               <Icon type="bars" />
@@ -40,9 +43,9 @@ function BooksList() {
         </RightPart>
       </HeaderWrapper>
       <BodyWrapper>
-        <Book />
-        <Book />
-        <Book />
+        {
+          books.map((book) => <Book selectBook={selectBook} book={book} selectedBooksIds={selectedBooksIds} key={Math.random()} />)
+        }
       </BodyWrapper>
     </Wrapper>
   );
@@ -50,6 +53,9 @@ function BooksList() {
 
 BooksList.propTypes = {
   books: PropTypes.array,
+  selectAllBooks: PropTypes.func,
+  selectBook: PropTypes.func,
+  selectedBooksIds: PropTypes.array,
 };
 
 export default BooksList;

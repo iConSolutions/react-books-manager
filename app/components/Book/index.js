@@ -2,6 +2,7 @@
 /* Import Third Party Dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 /* Import antd Components */
 import { Icon, Dropdown, Menu } from 'antd';
@@ -16,33 +17,53 @@ import ControlWrapper from './elements/ControlWrapper';
 import { Text, TEXT_DOM_ELEMENT } from '../../elements/Heading';
 
 
-function Book() {
+function Book({ book, selectedBooksIds, selectBook }) {
+  const selected = selectedBooksIds.indexOf(book.id) !== -1;
   return (
-    <Wrapper>
+    <Wrapper onClick={() => selectBook(book.id)} selected={selected}>
       <CoverWrapper>
         <Icon type="picture" style={{ fontSize: '24px', color: '#aaa' }} />
       </CoverWrapper>
       <DetailsWrapper>
-        <Text element={TEXT_DOM_ELEMENT.H4} fontSize={16} fontWeight={700} color="#1890ff">Book Title</Text>
+        <Text element={TEXT_DOM_ELEMENT.H4} fontSize={16} fontWeight={700} color="#1890ff">
+          {book.title}
+        </Text>
         <Text element={TEXT_DOM_ELEMENT.P} fontSize={12} fontWeight={400} color="#888">
           author
           <Text element={TEXT_DOM_ELEMENT.SPAN} fontSize={12} fontWeight={700} color="#1890ff">
-            {" "} zaidbentaleb
+            {' '} {book.author}
           </Text>
         </Text>
         <Text element={TEXT_DOM_ELEMENT.p} fontSize={14} fontWeight={400} color="#aaa">
-          livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé
+          {book.description}
         </Text>
       </DetailsWrapper>
-      <ControlWrapper>
-        O
+      <ControlWrapper >
+        <Dropdown
+          overlay={(
+            <Menu>
+              <Menu.Item>
+                remove
+              </Menu.Item>
+              <Menu.Item>
+                <Link to={`/books/${book.id}`}>
+                  update
+                </Link>
+              </Menu.Item>
+            </Menu>
+          )}
+        >
+          <Icon type="ellipsis" style={{ fontSize: '18px' }} />
+        </Dropdown>
       </ControlWrapper>
     </Wrapper>
   );
 }
 
 Book.propTypes = {
-  book: PropTypes.string,
+  book: PropTypes.object,
+  selectedBooksIds: PropTypes.array,
+  selectBook: PropTypes.func,
 };
 
 export default Book;

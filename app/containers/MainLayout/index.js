@@ -26,6 +26,7 @@ export default class MainLayout extends React.PureComponent { // eslint-disable-
           <Switch>
             <Route exact path={'/books'} component={BooksPage} />
             <Route exact path="/books/add" component={BookFormPage} />
+            <Route exact path="/books/:id" component={BookFormPage} />
           </Switch>
         </ContentWrapper>
       </Wrapper>

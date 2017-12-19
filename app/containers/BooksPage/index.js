@@ -10,22 +10,32 @@ import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
 import makeSelectBooksList from './selectors';
 import reducer from './reducer';
+import * as ActionsCreator from './actions';
 
 /* Import Components */
-// import EmptyList from '../../components/EmptyList';
+import EmptyList from '../../components/EmptyList';
 import BooksList from '../../components/BooksList';
 
 
 export class BooksPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
-    return (
-      <BooksList />
-    );
+    if (this.props.bookslist.books.length > 0) {
+      return (
+        <BooksList
+          books={this.props.bookslist.books}
+          selectedBooksIds={this.props.bookslist.selectedBooksIds}
+          selectAllBooks={this.props.selectAllBooks}
+          selectBook={this.props.selectBook}
+        />);
+    }
+    return (<EmptyList />);
   }
 }
 
 BooksPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  bookslist: PropTypes.object,
+  selectAllBooks: PropTypes.func,
+  selectBook: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -34,7 +44,8 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    selectAllBooks: () => dispatch(ActionsCreator.selectAllBooks()),
+    selectBook: (bookId) => dispatch(ActionsCreator.selectBook(bookId)),
   };
 }
 

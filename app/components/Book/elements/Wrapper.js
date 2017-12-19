@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 150px;
   background-color: #fff;
-  border: 1px solid #eee;
+  border: 1px solid ${(props) => props.selected ? '#1890ff' : '#eee'};
   cursor: pointer;
 `;
 

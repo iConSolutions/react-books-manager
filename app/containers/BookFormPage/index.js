@@ -10,6 +10,14 @@ import { compose } from 'redux';
 /* Import antd Components */
 import { Row, Col, Button, Input, Icon } from 'antd';
 
+/* Import Redux Flow */
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+import makeSelectBookFormPage from './selectors';
+import reducer from './reducer';
+import saga from './saga';
+import * as ActionsCreator from './actions';
+
 /* Import Shared Elements */
 import Card from '../../elements/Card';
 import { Text, TEXT_DOM_ELEMENT } from '../../elements/Heading';
@@ -18,15 +26,12 @@ import { Text, TEXT_DOM_ELEMENT } from '../../elements/Heading';
 import ControlWrapper from './elements/ControlWrapper';
 import CoverWrapper from './elements/CoverWrapper';
 
-/* Import Redux Flow */
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
-import makeSelectBookFormPage from './selectors';
-import reducer from './reducer';
-import saga from './saga';
-
 
 export class BookFormPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  componentWillMount() {
+    // if (this.props.match.params.id){}
+  }
+
   render() {
     return (
       <Row>
@@ -48,7 +53,13 @@ export class BookFormPage extends React.Component { // eslint-disable-line react
                 <Link to="/books">
                   <Button icon="close">cancel</Button>
                 </Link>
-                <Button type="primary" icon="check">confirm</Button>
+                <Button
+                  type="primary"
+                  disabled={this.props.bookformpage.title === '' || this.props.bookformpage.author === ''}
+                  icon="check"
+                >
+                  {this.props.match.params.id ? 'update' : 'create'}
+                </Button>
               </ControlWrapper>
             )}
           >
@@ -59,9 +70,13 @@ export class BookFormPage extends React.Component { // eslint-disable-line react
                   <Text element={TEXT_DOM_ELEMENT.SPAN} fontWeight={400} fontSize={14} color="red"> *</Text>
                 </Text><br />
                 <Text element={TEXT_DOM_ELEMENT.SPAN} fontWeight={400} fontSize={12} color="#aaa">
-                  de l'imprimerie depuis les années 1500, quand un peintre anony puis les années 1
+                  de limprimerie depuis les années 1500, quand un peintre anony puis les années 1
                 </Text>
-                <Input placeholder="give your book a title" />
+                <Input
+                  onChange={(e) => this.props.onInputChange('title', e.target.value)}
+                  value={this.props.bookformpage.title}
+                  placeholder="give your book a title"
+                />
               </Col>
             </Row>
             <Row>
@@ -71,18 +86,26 @@ export class BookFormPage extends React.Component { // eslint-disable-line react
                   <Text element={TEXT_DOM_ELEMENT.SPAN} fontWeight={400} fontSize={14} color="red"> *</Text>
                 </Text><br />
                 <Text element={TEXT_DOM_ELEMENT.SPAN} fontWeight={400} fontSize={12} color="#aaa">
-                  de l'imprimerie depuis les années 1500, quand un peintre anony puis les années 1
+                  de limprimerie depuis les années 1500, quand un peintre anony puis les années 1
                 </Text>
-                <Input placeholder="give your book a title" />
+                <Input
+                  onChange={(e) => this.props.onInputChange('author', e.target.value)}
+                  value={this.props.bookformpage.author}
+                  placeholder="give your book a title"
+                />
               </Col>
             </Row>
             <Row>
               <Col span={24}>
                 <Text element={TEXT_DOM_ELEMENT.SPAN} fontWeight={400} fontSize={14} color="#333">Description</Text><br />
                 <Text element={TEXT_DOM_ELEMENT.SPAN} fontWeight={400} fontSize={12} color="#aaa">
-                  de l'imprimerie depuis les années 1500, quand un peintre anony puis les années 1
+                  de limprimerie depuis les années 1500, quand un peintre anony puis les années 1
                 </Text>
-                <Input.TextArea rows={4} />
+                <Input.TextArea
+                  onChange={(e) => this.props.onInputChange('description', e.target.value)}
+                  value={this.props.bookformpage.description}
+                  rows={4}
+                />
               </Col>
             </Row>
           </Card>
@@ -93,7 +116,9 @@ export class BookFormPage extends React.Component { // eslint-disable-line react
 }
 
 BookFormPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func,
+  bookformpage: PropTypes.object,
+  match: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -102,7 +127,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    onInputChange: (k, v) => dispatch(ActionsCreator.changeInput(k, v)),
   };
 }
 

@@ -1,20 +1,22 @@
-/*
- *
- * BookFormPage reducer
- *
- */
 
 import { fromJS } from 'immutable';
 import {
-  DEFAULT_ACTION,
+  CHANGE_INPUT,
 } from './constants';
 
-const initialState = fromJS({});
+const initialState = fromJS({
+  title: '',
+  author: '',
+  description: '',
+});
 
 function bookFormPageReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+
+    /* Change input */
+    case CHANGE_INPUT :
+      return state.set(action.payload.key, action.payload.value);
+
     default:
       return state;
   }
