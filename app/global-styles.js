@@ -4,8 +4,8 @@ import { injectGlobal } from 'styled-components';
 injectGlobal`
 
   * {
-    padding: 0px!important;
-    margin: 0px!important;
+    padding: 0px;
+    margin: 0px;
   }
   
   html,
@@ -23,14 +23,13 @@ injectGlobal`
   }
 
   #app {
-    background-color: #fafafa;
+    background-color: #f5f5f5;
     height: 100%;
     width: 100%; 
   }
 
   p,
   label {
-    font-family: Georgia, Times, 'Times New Roman', serif;
     line-height: 1.5em;
   }
 `;

@@ -1,10 +1,3 @@
-/**
- * app.js
- *
- * This is the entry file for the application, only setup and boilerplate
- * code.
- */
-
 // Needed for redux-saga es6 generator support
 import 'babel-polyfill';
 
@@ -15,6 +8,9 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import 'sanitize.css/sanitize.css';
+
+// Import antd styles
+import 'antd/dist/antd.css';
 
 // Import root app
 import App from 'containers/App';
@@ -42,14 +38,19 @@ import configureStore from './configureStore';
 // Import i18n messages
 import { translationMessages } from './i18n';
 
+// Import themify icons set
+import './assets/icons/themify/themify-icons.css';
+
 // Import CSS reset and Global Styles
 import './global-styles';
+
 
 // Create redux store with history
 const initialState = {};
 const history = createHistory();
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
+
 
 const render = (messages) => {
   ReactDOM.render(
