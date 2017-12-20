@@ -55,8 +55,9 @@ export class BookFormPage extends React.Component { // eslint-disable-line react
                 </Link>
                 <Button
                   type="primary"
-                  disabled={this.props.bookformpage.title === '' || this.props.bookformpage.author === ''}
+                  disabled={this.props.bookformpage.title === '' || this.props.bookformpage.author === '' || this.props.bookformpage.isProcessing}
                   icon="check"
+                  loading={this.props.bookformpage.isProcessing}
                 >
                   {this.props.match.params.id ? 'update' : 'create'}
                 </Button>
@@ -128,6 +129,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     onInputChange: (k, v) => dispatch(ActionsCreator.changeInput(k, v)),
+    onSubmit: () => console.log('submit form'), // dispatch(insertBook()),
   };
 }
 

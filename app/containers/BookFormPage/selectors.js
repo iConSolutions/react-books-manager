@@ -1,25 +1,21 @@
+
 import { createSelector } from 'reselect';
 
-/**
- * Direct selector to the bookFormPage state domain
- */
+
 const selectBookFormPageDomain = (state) => state.get('bookFormPage');
-
-/**
- * Other specific selectors
- */
-
-
-/**
- * Default selector used by BookFormPage
- */
 
 const makeSelectBookFormPage = () => createSelector(
   selectBookFormPageDomain,
-  (substate) => substate.toJS()
+  (substate) => substate.toJS({
+    title: substate.get('title'),
+    author: substate.get('author'),
+    description: substate.get('description'),
+    isProcessing: substate.get('isProcessing'),
+  })
 );
 
+
 export default makeSelectBookFormPage;
-export {
-  selectBookFormPageDomain,
-};
+// export {
+//   selectBookFormPageDomain,
+// };
